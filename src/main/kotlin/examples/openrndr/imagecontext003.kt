@@ -4,6 +4,8 @@ import org.openrndr.application
 import org.openrndr.color.ColorRGBa
 import org.openrndr.draw.loadFont
 import org.openrndr.draw.loadImage
+import org.openrndr.extra.compositor.post
+import org.openrndr.extra.fx.color.Duotone
 import org.openrndr.extras.imageFit.imageFit
 import org.openrndr.shape.Rectangle
 import org.openrndr.writer
@@ -44,8 +46,8 @@ fun main() = application {
                     drawer!!.fill = niceColors[index % niceColors.size].first
                     index++
                 }
-
             }
+
         }
     }
 }

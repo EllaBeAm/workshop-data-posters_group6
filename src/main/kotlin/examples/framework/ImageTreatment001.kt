@@ -81,8 +81,8 @@ fun main() = application {
 
                 // Add a duotone effect, use the default colors
                 post(Duotone()) {
-                    // this.backgroundColor = ColorRGBa.BLACK
-                    // this.foregroundColor = ColorRGBa.WHITE
+                    this.backgroundColor = ColorRGBa.BLACK
+                    this.foregroundColor = ColorRGBa.WHITE
                 }
                 post(FilmGrain())
 
