@@ -11,26 +11,22 @@ import org.openrndr.color.rgb
 import org.openrndr.draw.loadFont
 import org.openrndr.draw.tint
 import org.openrndr.events.Event
-import org.openrndr.extra.color.spaces.toOKHSVa
 import org.openrndr.extra.compositor.*
 import org.openrndr.extra.fx.blend.Multiply
 import org.openrndr.extra.fx.blur.ApproximateGaussianBlur
 import org.openrndr.extra.fx.color.Duotone
-import org.openrndr.extra.fx.color.LumaOpacity
-import org.openrndr.extra.fx.distort.StackRepeat
+import org.openrndr.extra.fx.distort.Perturb
 import org.openrndr.extra.fx.patterns.Checkers
 import org.openrndr.extra.fx.shadow.DropShadow
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.gui.addTo
-import org.openrndr.extra.noise.uniform
 import org.openrndr.extra.parameters.ActionParameter
 import org.openrndr.extra.parameters.Description
 import org.openrndr.extras.imageFit.imageFit
 import org.openrndr.shape.Rectangle
 import org.openrndr.writer
-import tools.statistics
 
-// Image treatment demonstration. Learn from it, don't just copy ;)
+// This demonstrates layer masking
 
 fun main() = application {
     configure {
@@ -52,42 +48,47 @@ fun main() = application {
             }
         }
 
-        // all our image treatment happens inside a compose block
         val composite = compose {
+            var background = ColorRGBa.PINK
+            onNewArticle.listen {
+                background = rgb(Math.random(), Math.random(), Math.random())
+            }
+
             layer {
+                post(Checkers())
+            }
 
-                // here we create variables that we will use to randomize the settings of StackRepeat
-                var xo = 0.0
-                var yo = 0.0
 
-                // listen for a new article event and randomize
-                onNewArticle.listen {
-                    xo = Double.uniform(-0.25, 0.25)
-                    yo = Double.uniform(-0.25, 0.25)
-                }
-
+            layer {
                 draw {
-                    // draw the article image full page but have 10 px margins
-                    drawer.imageFit(article.images[0], drawer.bounds.offsetEdges(-10.0))
+                    if (article.images.isNotEmpty()) {
+                        drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
+                    }
                 }
-                // add a drop shadow effect first
-                post(DropShadow())
-                post(StackRepeat()) {
-                    // we can learn which settings StackRepeat has by moving the cursor over StackRepeat and
-                    // pressing command-b on macOS or ctrl-b on Windows/Linux
-                    this.xOffset = xo
-                    this.yOffset = yo
-                }.addTo(gui)
-
-                // Add a duotone effect, use the default colors
-                post(Duotone()) {
-                    this.backgroundColor = ColorRGBa.BLACK
-                    this.foregroundColor = ColorRGBa.WHITE
-                }
-                post(FilmGrain())
 
             }
+
+            layer {
+                draw {
+                    if (article.images.isNotEmpty()) {
+                        drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
+                    }
+                }
+
+                post(Perturb()).addTo(gui)
+                mask {
+                    drawer.circle(width/2.0, height/2.0, 220.0)
+                }
+                blend(Multiply())
+            }
+            post(Duotone()) {
+                this.backgroundColor = ColorRGBa.BLACK
+                this.foregroundColor = ColorRGBa.WHITE
+            }
+            post(FilmGrain())
         }
+
+
         onNewArticle.trigger(article)
 
         gui.add(settings)
