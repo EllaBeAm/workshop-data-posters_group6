@@ -36,10 +36,10 @@ fun main() = application {
     }
 
     program {
+        val font = loadFont("data/fonts/IBMPlexMono-Bold.ttf", 48.0)
         val archive = localArchive("archives/example-poetry").iterator()
         var article = archive.next()
         val gui = GUI()
-
         val onNewArticle = Event<LoadedArticle>()
         val settings = @Description("Settings") object {
             @ActionParameter("Next article")
