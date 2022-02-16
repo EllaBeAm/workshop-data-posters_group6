@@ -3,6 +3,7 @@ package examples.framework
 import FilmGrain
 import archives.LoadedArticle
 import archives.localArchive
+
 import org.openrndr.animatable.Animatable
 import org.openrndr.animatable.easing.Easing
 import org.openrndr.application
@@ -32,6 +33,9 @@ fun main() = application {
     configure {
         width = 600
         height = 800
+
+
+
     }
 
     program {
@@ -49,20 +53,17 @@ fun main() = application {
         }
 
         val composite = compose {
-            var background = ColorRGBa.PINK
+            var background = ColorRGBa.WHITE
             onNewArticle.listen {
-                background = rgb(Math.random(), Math.random(), Math.random())
+                background = ColorRGBa.WHITE
             }
 
-            layer {
-                post(Checkers())
-            }
 
 
             layer {
                 draw {
                     if (article.images.isNotEmpty()) {
-                        drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
+                        drawer.imageFit(article.images[0], 30.0, 50.0, width-60.0 * 1.0, height * 1.0-150.0)
                     }
                 }
 
@@ -86,7 +87,7 @@ fun main() = application {
                 this.backgroundColor = ColorRGBa.BLACK
                 this.foregroundColor = ColorRGBa.WHITE
             }
-            post(FilmGrain())
+
         }
 
 
@@ -95,7 +96,11 @@ fun main() = application {
         gui.add(settings)
         extend(gui)
         extend {
+            drawer.clear(ColorRGBa.WHITE)
             composite.draw(drawer)
+
+
         }
+
     }
 }

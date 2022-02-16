@@ -1,6 +1,5 @@
 package examples.framework
 
-import FilmGrain
 import archives.LoadedArticle
 import archives.localArchive
 import org.openrndr.animatable.Animatable
@@ -12,9 +11,7 @@ import org.openrndr.draw.loadFont
 import org.openrndr.draw.tint
 import org.openrndr.events.Event
 import org.openrndr.extra.compositor.*
-import org.openrndr.extra.fx.blend.Multiply
 import org.openrndr.extra.fx.blur.ApproximateGaussianBlur
-import org.openrndr.extra.fx.color.Duotone
 import org.openrndr.extra.fx.distort.Perturb
 import org.openrndr.extra.fx.patterns.Checkers
 import org.openrndr.extra.fx.shadow.DropShadow
@@ -25,6 +22,8 @@ import org.openrndr.extra.parameters.Description
 import org.openrndr.extras.imageFit.imageFit
 import org.openrndr.shape.Rectangle
 import org.openrndr.writer
+import kotlin.math.acosh
+import kotlin.math.cos
 
 // This demonstrates layer masking
 
@@ -76,17 +75,26 @@ fun main() = application {
                 }
 
                 post(Perturb()).addTo(gui)
-
                 mask {
-                    drawer.circle(width/2.0, height/2.0, 220.0)
+                    drawer.circle(width / 2.0, height / 2.0, 220.0)
                 }
-                blend(Multiply())
+
+
             }
-            post(Duotone()) {
-                this.backgroundColor = ColorRGBa.BLACK
-                this.foregroundColor = ColorRGBa.WHITE
+
+            layer {
+                draw {
+                    if (article.images.isNotEmpty()) {
+                        drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
+                    }
+                }
+
+
+                post(ApproximateGaussianBlur()).addTo(gui)
+                mask {
+                    drawer.circle(150.00, 150.00, 120.0)
+                }
             }
-            post(FilmGrain())
         }
 
 
