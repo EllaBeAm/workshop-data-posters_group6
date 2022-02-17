@@ -56,50 +56,15 @@ fun main() = application {
             onNewArticle.listen {
                 background = ColorRGBa.WHITE
             }
+        val font = loadFont("data/fonts/GT-America-Medium.otf", 48.0)
+            var xOptions = listOf(30.00, 291.66)
+            var yOptions = listOf(30.00, 276.66, 523.32)
+            var xx = 0.0
+            var yy = 0.0
 
 
-            //original photo
-            layer {
-
-                // here we create variables that we will use to randomize the settings of StackRepeat
-                var xo = 0.0
-                var yo = 0.0
-                var xOptions = listOf(30.00, 291.66)
-                var yOptions = listOf(30.00, 276.66, 523.32)
-                var xx = 0.0
-                var yy = 0.0
-
-
-                // listen for a new article event and randomize
-                onNewArticle.listen {
-                    xo = Double.uniform(-0.25, 0.25)
-                    yo = Double.uniform(-0.25, 0.25)
-                    xx = xOptions.random()
-                    yy = yOptions.random()
-                }
-
-                draw {
-
-                    drawer.imageFit(article.images[0], xx, yy, 246.66, 246.66)
-                }
-            }
 
             //text
-            layer {
-                val font = loadFont("data/fonts/GT-America-Medium.otf", 48.0)
-                draw {
-                    if (article.texts.isNotEmpty()) {
-                        val stats = article.imageStatistics[0]
-                        drawer.fill = ColorRGBa.BLACK
-                        drawer.fontMap = font
-                        writer {
-                            box = Rectangle(31.0, 30.0, 271.0, height - 80.0)
-                            gaplessNewLine()
-                            text(article.texts[0])
-                        }
-                    }
-                }
-            }
 
             //pixel miracle
             layer {
@@ -151,7 +116,52 @@ fun main() = application {
                 this.foregroundColor = ColorRGBa.WHITE
             }
 
+            //original photo & text
+            layer {
+
+                // here we create variables that we will use to randomize the settings of StackRepeat
+                var xo = 0.0
+                var yo = 0.0
+
+
+                // listen for a new article event and randomize
+                onNewArticle.listen {
+                    xo = Double.uniform(-0.25, 0.25)
+                    yo = Double.uniform(-0.25, 0.25)
+                    xx = xOptions.random()
+                    yy = yOptions.random()
+                }
+
+                draw {
+                    drawer.imageFit(article.images[0], xx, yy, 246.66, 246.66)
+                    if (article.texts.isNotEmpty()) {
+                        val stats = article.imageStatistics[0]
+                        drawer.fill = ColorRGBa.BLACK
+                        drawer.fontMap = font
+                        writer {
+                            leading = -5.0
+                            box = Rectangle(31.0, yy + 300.0, 271.0, height - 80.0)
+                            gaplessNewLine()
+                            text(article.texts[0])
+                        }
+                    }
+                }
+            }
+
+
+            layer {
+                drawer.fill = ColorRGBa.BLACK
+                drawer.fontMap = font
+                writer {
+                    leading = -5.0
+                    box = Rectangle(31.0, yy + 300.0, 271.0, height - 80.0)
+                    gaplessNewLine()
+                    text(article.texts[0])
+                }
+            }
         }
+
+
 
 
         onNewArticle.trigger(article)
