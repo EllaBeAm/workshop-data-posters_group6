@@ -63,16 +63,28 @@ fun main() = application {
 
 
             layer {
-                draw {
-                    if (article.images.isNotEmpty()) {
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5, 172.5)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.25, 172.5 * 1.25)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.5, 172.5 * 1.5)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.75, 172.5 * 1.75)
 
-                    }
+                // here we create variables that we will use to randomize the settings of StackRepeat
+                var xo = 0.0
+                var yo = 0.0
+                var xOptions = listOf(30.00, 291.66)
+                var yOptions = listOf(30.00, 276.66, 523.32)
+                var xx = 0.0
+                var yy = 0.0
+
+
+                // listen for a new article event and randomize
+                onNewArticle.listen {
+                    xo = Double.uniform(-0.25, 0.25)
+                    yo = Double.uniform(-0.25, 0.25)
+                    xx = xOptions.random()
+                    yy = yOptions.random()
                 }
 
+                draw {
+
+                    drawer.imageFit(article.images[0], xx, yy, 246.66, 246.66)
+                }
             }
 
             layer {
@@ -139,8 +151,6 @@ fun main() = application {
             gui.visible = mouse.position.x < 200
             drawer.clear(ColorRGBa.WHITE)
             composite.draw(drawer)
-
-
         }
 
     }
