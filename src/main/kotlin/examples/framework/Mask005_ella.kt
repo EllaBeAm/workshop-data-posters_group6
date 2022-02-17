@@ -22,6 +22,8 @@ import org.openrndr.extra.parameters.Description
 import org.openrndr.extras.imageFit.imageFit
 import org.openrndr.shape.Rectangle
 import org.openrndr.writer
+import kotlin.math.acosh
+import kotlin.math.cos
 
 // This demonstrates layer masking
 
@@ -74,7 +76,23 @@ fun main() = application {
 
                 post(Perturb()).addTo(gui)
                 mask {
-                    drawer.circle(width/2.0, height/2.0, 200.0)
+                    drawer.circle(width / 2.0, height / 2.0, 220.0)
+                }
+
+
+            }
+
+            layer {
+                draw {
+                    if (article.images.isNotEmpty()) {
+                        drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
+                    }
+                }
+
+
+                post(ApproximateGaussianBlur()).addTo(gui)
+                mask {
+                    drawer.circle(150.00, 150.00, 120.0)
                 }
             }
         }

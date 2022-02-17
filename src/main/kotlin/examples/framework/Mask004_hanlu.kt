@@ -77,6 +77,7 @@ fun main() = application {
                 }
 
                 post(Perturb()).addTo(gui)
+
                 mask {
                     drawer.circle(width/2.0, height/2.0, 220.0)
                 }
