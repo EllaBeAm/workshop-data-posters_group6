@@ -1,15 +1,8 @@
 package examples
 
 import org.openrndr.application
-import org.openrndr.color.ColorRGBa
-import org.openrndr.draw.isolated
-import org.openrndr.draw.loadFont
 import org.openrndr.draw.loadImage
-import org.openrndr.extras.imageFit.FitMethod
 import org.openrndr.extras.imageFit.imageFit
-import org.openrndr.shape.Rectangle
-import org.openrndr.writer
-import kotlin.math.cos
 
 /**
  * This demonstrates imageFit, a much easier way for placing images on the screen.

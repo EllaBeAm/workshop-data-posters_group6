@@ -10,8 +10,8 @@ import org.openrndr.draw.loadImage
 fun main() = application {
 
     configure {
-        width = 768
-        height = 578
+        width = 400
+        height = 100
     }
     program {
          val image = loadImage("data/images/pm5544.png")
