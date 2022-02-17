@@ -152,6 +152,7 @@ fun main() = application {
             drawer.clear(ColorRGBa.WHITE)
             composite.draw(drawer)
 
+
         }
 
     }
