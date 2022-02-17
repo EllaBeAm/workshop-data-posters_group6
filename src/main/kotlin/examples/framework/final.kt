@@ -35,9 +35,6 @@ fun main() = application {
     configure {
         width = 600
         height = 800
-
-
-
     }
 
     program {
@@ -61,7 +58,7 @@ fun main() = application {
             }
 
 
-
+            //original photo
             layer {
 
                 // here we create variables that we will use to randomize the settings of StackRepeat
@@ -87,6 +84,24 @@ fun main() = application {
                 }
             }
 
+            //text
+            layer {
+                val font = loadFont("data/fonts/PicNic-Regular.otf", 64.0)
+                draw {
+                    if (article.texts.isNotEmpty()) {
+                        val stats = article.imageStatistics[0]
+                        drawer.fill = ColorRGBa.GRAY
+                        drawer.fontMap = font
+                        writer {
+                            box = Rectangle(40.0, 40.0, width - 80.0, height - 80.0)
+                            gaplessNewLine()
+                            text(article.texts[0])
+                        }
+                    }
+                }
+            }
+
+            //pixel miracle
             layer {
 
                 var xs = 2
