@@ -94,12 +94,14 @@ fun main() = application {
                     }
                 }
 
-                post(Perturb()) {
-                    phase = seconds * 0.1
-                    xSegments = xs
-                    ySegments = ys
+//                post(Perturb()) {
+//                    phase = seconds * 0.1
+//                    xSegments = xs
+//                    ySegments = ys
+//
+//                }
+                           .addTo(gui)
 
-                } .addTo(gui)
 
 //                mask {
 //                    drawer.imageFit(article.images[1], 30.0, 50.0, 127.5, 172.5)
