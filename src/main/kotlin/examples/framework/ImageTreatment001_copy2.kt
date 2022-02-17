@@ -59,20 +59,23 @@ fun main() = application {
                 // here we create variables that we will use to randomize the settings of StackRepeat
                 var xo = 0.0
                 var yo = 0.0
-                var xx = listOf(40.00, 340.00)
-
+                var xOptions = listOf(30.00, 291.66)
+                var yOptions = listOf(30.00, 276.66, 523.32)
+                var xx = 0.0
+                var yy = 0.0
 
 
                 // listen for a new article event and randomize
                 onNewArticle.listen {
                     xo = Double.uniform(-0.25, 0.25)
                     yo = Double.uniform(-0.25, 0.25)
-
+                    xx = xOptions.random()
+                    yy = yOptions.random()
         }
 
                 draw {
-                    // draw the article image full page but have 10 px margins
-                    drawer.imageFit(article.images[0], xx, 40.00)
+
+                    drawer.imageFit(article.images[0], xx, yy, 246.66, 246.66)
                 }
 
 
