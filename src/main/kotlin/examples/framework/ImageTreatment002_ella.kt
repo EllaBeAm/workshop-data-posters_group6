@@ -3,22 +3,15 @@ package examples.framework
 import FilmGrain
 import archives.LoadedArticle
 import archives.localArchive
-import org.openrndr.animatable.Animatable
-import org.openrndr.animatable.easing.Easing
 import org.openrndr.application
-import org.openrndr.color.ColorRGBa
-import org.openrndr.color.rgb
-import org.openrndr.draw.loadFont
-import org.openrndr.draw.tint
 import org.openrndr.events.Event
-import org.openrndr.extra.color.spaces.toOKHSVa
 import org.openrndr.extra.compositor.*
-import org.openrndr.extra.fx.blend.Multiply
-import org.openrndr.extra.fx.blur.ApproximateGaussianBlur
+import org.openrndr.extra.fx.blend.Add
+import org.openrndr.extra.fx.blur.HashBlur
 import org.openrndr.extra.fx.color.Duotone
 import org.openrndr.extra.fx.color.LumaOpacity
+import org.openrndr.extra.fx.distort.Perturb
 import org.openrndr.extra.fx.distort.StackRepeat
-import org.openrndr.extra.fx.patterns.Checkers
 import org.openrndr.extra.fx.shadow.DropShadow
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.gui.addTo
@@ -26,11 +19,9 @@ import org.openrndr.extra.noise.uniform
 import org.openrndr.extra.parameters.ActionParameter
 import org.openrndr.extra.parameters.Description
 import org.openrndr.extras.imageFit.imageFit
-import org.openrndr.shape.Rectangle
-import org.openrndr.writer
-import tools.statistics
 
 // Image treatment demonstration. Learn from it, don't just copy ;)
+// Here we learn that we are not limited to using a single layer
 
 fun main() = application {
     configure {
@@ -54,8 +45,9 @@ fun main() = application {
 
         // all our image treatment happens inside a compose block
         val composite = compose {
-            layer {
 
+            // our first image layer, we can name them to make it a bit easier to find it back
+            var imageLayer0 = layer {
                 // here we create variables that we will use to randomize the settings of StackRepeat
                 var xo = 0.0
                 var yo = 0.0
@@ -81,18 +73,48 @@ fun main() = application {
 
                 // Add a duotone effect, use the default colors
                 post(Duotone()) {
-                    this.backgroundColor = ColorRGBa.BLACK
-                    this.foregroundColor = ColorRGBa.WHITE
+                    // this.backgroundColor = ColorRGBa.BLACK
+                    // this.foregroundColor = ColorRGBa.WHITE
                 }
-                post(FilmGrain())
+//                post(FilmGrain())
+            }
+
+            var imageLayer1 = layer {
+
+                var perturbPhase = 0.0
+                onNewArticle.listen {
+                    perturbPhase = Double.uniform(-1.0, 1.0)
+                }
+
+                draw {
+                    drawer.imageFit(article.images[0], drawer.bounds.offsetEdges(-100.0))
+                }
+                // LumaOpacity maps color intensity to transparency
+//                post(LumaOpacity()) {
+//                    this.foregroundLuma = 0.5
+//                    this.backgroundLuma = 0.3
+                }
+                // Make everything gooey looking
+                post(Perturb()) {
+                    this.phase = perturbPhase
+                }
+
+                // Apply a bit of diffusion blur
+                post(HashBlur()) {
+                    this.radius = 2.0
+                }
+                //blend(Add())
 
             }
+
         }
         onNewArticle.trigger(article)
 
         gui.add(settings)
         extend(gui)
         extend {
+            gui.visible = mouse.position.x < 200.0
+
             composite.draw(drawer)
         }
     }

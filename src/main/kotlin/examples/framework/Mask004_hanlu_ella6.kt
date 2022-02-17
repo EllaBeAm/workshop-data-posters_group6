@@ -37,7 +37,6 @@ fun main() = application {
         height = 800
 
 
-
     }
 
     program {
@@ -60,24 +59,6 @@ fun main() = application {
                 background = ColorRGBa.WHITE
             }
 
-
-
-            layer {
-                draw {
-                    if (article.images.isNotEmpty()) {
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.75, 172.5 * 1.75)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.5, 172.5 * 1.5)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.25, 172.5 * 1.25)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5, 172.5)
-
-
-
-
-                    }
-                }
-
-            }
-
             layer {
 
                 var xs = 2
@@ -94,36 +75,30 @@ fun main() = application {
                     }
                 }
 
-//                post(Perturb()) {
-//                    phase = seconds * 0.1
-//                    xSegments = xs
-//                    ySegments = ys
-//
-//                }
-                           .addTo(gui)
+                post(Perturb()) {
+                    phase = seconds * 0.1
+                    xSegments = xs
+                    ySegments = ys
 
+                }.addTo(gui)
 
-//                mask {
-//                    drawer.imageFit(article.images[1], 30.0, 50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5,50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 30.0, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 30.0, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 30.0, 597.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5, 597.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 597.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 597.5, 127.5, 172.5)
-//
-//                }
-                //blend(Multiply())
             }
+
+
+
+            layer {
+                draw {
+                    if (article.images.isNotEmpty()) {
+                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.75, 172.5 * 1.75)
+                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.5, 172.5 * 1.5)
+                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.25, 172.5 * 1.25)
+                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5, 172.5)
+                    }
+                }
+
+            }
+
+
             post(Duotone()) {
                 this.backgroundColor = ColorRGBa.BLACK
                 this.foregroundColor = ColorRGBa.WHITE
