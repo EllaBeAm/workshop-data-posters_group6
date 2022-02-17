@@ -1,0 +1,1 @@
+{"Perturb":{"scale":{"doubleValue":1.0},"phase":{"doubleValue":0.094},"radius":{"doubleValue":0.164},"lacunarity":{"doubleValue":0.395},"gain":{"doubleValue":0.5},"decay":{"doubleValue":0.5},"octaves":{"intValue":4},"xSegments":{"intValue":17},"ySegments":{"intValue":33},"outputUV":{"booleanValue":false},"offset":{"vector2Value":{"x":0.0,"y":0.0}}},"Settings":{"nextArticle":{}}}
