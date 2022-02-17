@@ -48,7 +48,7 @@ fun main() = application {
                 var yy = 0.0
 
 
-                // listen for a new article event and randomize
+                // listen hfor a new article event and randomize
                 onNewArticle.listen {
                     xo = Double.uniform(-0.25, 0.25)
                     yo = Double.uniform(-0.25, 0.25)
