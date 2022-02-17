@@ -151,6 +151,7 @@ fun main() = application {
             gui.visible = mouse.position.x < 200
             drawer.clear(ColorRGBa.WHITE)
             composite.draw(drawer)
+
         }
 
     }
