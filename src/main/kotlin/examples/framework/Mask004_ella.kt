@@ -32,7 +32,7 @@ fun main() = application {
     }
 
     program {
-        val archive = localArchive("archives/example-poetry").iterator()
+        val archive = localArchive("archives/faces").iterator()
         var article = archive.next()
         val gui = GUI()
 
