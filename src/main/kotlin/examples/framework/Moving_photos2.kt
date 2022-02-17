@@ -13,7 +13,7 @@ import org.openrndr.extra.parameters.ActionParameter
 import org.openrndr.extra.parameters.Description
 import org.openrndr.extras.imageFit.imageFit
 
-// Image treatment demonstration. Learn from it, don't just copy ;)
+
 
 fun main() = application {
     configure {
