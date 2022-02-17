@@ -86,14 +86,14 @@ fun main() = application {
 
             //text
             layer {
-                val font = loadFont("data/fonts/PicNic-Regular.otf", 64.0)
+                val font = loadFont("data/fonts/GT-America-Medium.otf", 48.0)
                 draw {
                     if (article.texts.isNotEmpty()) {
                         val stats = article.imageStatistics[0]
-                        drawer.fill = ColorRGBa.GRAY
+                        drawer.fill = ColorRGBa.BLACK
                         drawer.fontMap = font
                         writer {
-                            box = Rectangle(40.0, 40.0, width - 80.0, height - 80.0)
+                            box = Rectangle(31.0, 30.0, 271.0, height - 80.0)
                             gaplessNewLine()
                             text(article.texts[0])
                         }
