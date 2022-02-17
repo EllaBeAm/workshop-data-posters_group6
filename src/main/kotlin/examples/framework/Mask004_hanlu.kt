@@ -12,6 +12,7 @@ import org.openrndr.draw.loadFont
 import org.openrndr.draw.tint
 import org.openrndr.events.Event
 import org.openrndr.extra.compositor.*
+import org.openrndr.extra.fx.blend.ColorDodge
 import org.openrndr.extra.fx.blend.Multiply
 import org.openrndr.extra.fx.blur.ApproximateGaussianBlur
 import org.openrndr.extra.fx.color.Duotone
@@ -86,6 +87,22 @@ fun main() = application {
                 this.foregroundColor = ColorRGBa.WHITE
             }
             post(FilmGrain())
+            layer {
+                val font = loadFont("data/fonts/PicNic-Regular.otf", 64.0)
+                draw {
+                    if (article.texts.isNotEmpty()) {
+                        val stats = article.imageStatistics[0]
+                        drawer.fill = ColorRGBa.GRAY
+                        drawer.fontMap = font
+                        writer {
+                            box = Rectangle(40.0, 40.0, width - 80.0, height - 80.0)
+                            gaplessNewLine()
+                            text(article.texts[0])
+                        }
+                    }
+                }
+            }
+            blend(ColorDodge())
         }
 
 

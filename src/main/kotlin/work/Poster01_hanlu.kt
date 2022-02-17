@@ -1,5 +1,6 @@
 package work
 
+import FilmGrain
 import archives.LoadedArticle
 import archives.localArchive
 import org.openrndr.application
@@ -8,8 +9,11 @@ import org.openrndr.color.rgb
 import org.openrndr.draw.loadFont
 import org.openrndr.events.Event
 import org.openrndr.extra.compositor.*
+import org.openrndr.extra.fx.blend.ColorDodge
+import org.openrndr.extra.fx.blend.Multiply
 import org.openrndr.extra.fx.blur.ApproximateGaussianBlur
 import org.openrndr.extra.fx.color.Duotone
+import org.openrndr.extra.fx.distort.Perturb
 import org.openrndr.extra.fx.shadow.DropShadow
 import org.openrndr.extra.gui.GUI
 import org.openrndr.extra.gui.addTo
@@ -48,39 +52,46 @@ fun main() = application {
             // -- image layer
             layer {
                 draw {
-
+                    if (article.images.isNotEmpty()) {
                         drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
-                }
-            }
-
-            layer {
-                draw {
-
-                    drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
-
-                }
-                post(ApproximateGaussianBlur()).addTo(gui)
-                mask {
-                    drawer.imageFit(article.images[1], 0.0, 0.0, width * 1.0, height * 1.0)
-
-                }
-
-            }
-            layer {
-                val font = loadFont("data/fonts/IBMPlexMono-Bold.ttf", 64.0)
-                draw {
-                    if (article.texts.isNotEmpty()) {
-                        val stats = article.imageStatistics[0]
-                        drawer.fill = stats.histogram.colors()[0].first
-                        drawer.fontMap = font
-                        writer {
-                            box = Rectangle(40.0, 40.0, width - 80.0, height - 80.0)
-                            gaplessNewLine()
-                            text(article.texts[0])
-                        }
                     }
                 }
+
             }
+
+            layer {
+                draw {
+                    if (article.images.isNotEmpty()) {
+                        drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
+                    }
+                }
+
+                post(Perturb()).addTo(gui)
+                mask {
+                    drawer.imageFit(article.images[1], 0.0, 0.0, width * 1.0, height * 1.0)
+                }
+            }
+//            post(Duotone()) {
+//                this.backgroundColor = ColorRGBa.BLACK
+//                this.foregroundColor = ColorRGBa.WHITE
+//            }
+            post(FilmGrain())
+//            layer {
+//                val font = loadFont("data/fonts/Jellyka CuttyCupcakes.ttf", 100.0)
+//                draw {
+//                    if (article.texts.isNotEmpty()) {
+//                        val stats = article.imageStatistics[0]
+//                        drawer.fill = ColorRGBa.GRAY
+//                        drawer.fontMap = font
+//                        writer {
+//                            box = Rectangle(40.0, 40.0, width - 80.0, height - 80.0)
+//                            gaplessNewLine()
+//                            text(article.texts[0])
+//                        }
+//                    }
+//                }
+//                blend(ColorDodge())
+//            }
 
         }
         onNewArticle.trigger(article)
