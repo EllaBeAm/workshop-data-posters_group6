@@ -183,12 +183,16 @@ fun main() = application {
                 xl = xOptions.random()
                 yl = yOptions.random()
 
-                val font = loadFont("data/fonts/GT-America-Medium.otf", 24.0)
+                val font = loadFont("data/fonts/GT-America-Medium.otf", 28.0)
 
 
                 draw {
-                    drawer.rectangle(xl + 15.0, yl + 15.0, 142.5 * 2.0, 192.5)
-                    drawer.fill = ColorRGBa.WHITE
+                    drawer.rectangles {
+                        drawer.fill = ColorRGBa.WHITE
+                        drawer.stroke = null
+                        drawer.strokeWeight = 1.0
+                        drawer.rectangle(xl + 15.0, yl + 15.0, 142.5 * 2.0, 192.5)
+                    }
 
                     if (article.texts.isNotEmpty()) {
                         val stats = article.imageStatistics[0]
@@ -196,7 +200,7 @@ fun main() = application {
                         drawer.fontMap = font
                         writer {
                             leading = 0.0
-                            box = Rectangle(xl + 27.0, yl + 40.0, 142.5 * 2.0 - 20.0, 192.5 - 15.0)
+                            box = Rectangle(xl + 29.0, yl + 45.0, 142.5 * 2.0 - 20.0, 192.5 - 20.0)
                             text(article.texts[0])
                         }
                     }
@@ -219,12 +223,6 @@ fun main() = application {
                         drawer.strokeWeight = 1.0
                         drawer.rectangle(xs + 15.0, ys + 15.0, 142.5, 192.5)
                     }
-                }
-
-//                        stroke = ColorRGBa.WHITE
-//                        val pos = xs + 15.0, ys + 15.0
-//                        val size = 142.5, 192.5
-
 
                     if (article.texts.isNotEmpty()) {
                         val stats = article.imageStatistics[0]
@@ -232,10 +230,11 @@ fun main() = application {
                         drawer.fontMap = font
                         writer {
                             leading = 0.0
-                            box = Rectangle(xs + 27.0, ys + 27.0, 142.5 - 20.0, 192.5 - 15.0)
-                            text("Prosopagnosia")
+                            box = Rectangle(xs + 27.0, ys + 35.0, 142.5 - 20.0, 192.5 - 15.0)
+                            text("Prosopagnosia - A cognitive disorder of face perception in which the ability to recognize familiar faces, including one's own face. ")
                         }
                     }
+                }
             }
 
             post(Duotone()) {
