@@ -55,6 +55,9 @@ fun main() = application {
         var xOptions = listOf(0.00, 142.50, 142.50*2.0)
         var yOptions = listOf(0.00, 192.50, 192.50*2.0)
 
+        var xOption1 = listOf(0.00, 142.50, 142.50*2.0, 142.50*3.0)
+        var yOption1 = listOf(0.00, 192.50, 192.50*2.0, 192.50*3.0)
+
         //position for the large image
         var xx = 0.0
         var yy = 0.0
@@ -126,7 +129,7 @@ fun main() = application {
 
 
                 }
-                //blend(Multiply())
+
             }
 
             //large image
@@ -171,7 +174,7 @@ fun main() = application {
 
 
                 }
-                //blend(Multiply())
+
             }
 
             //large text block
@@ -180,12 +183,16 @@ fun main() = application {
                 xl = xOptions.random()
                 yl = yOptions.random()
 
-                val font = loadFont("data/fonts/GT-America-Medium.otf", 24.0)
+                val font = loadFont("data/fonts/East.ttf", 28.0)
 
 
                 draw {
-                    drawer.rectangle(xl + 15.0, yl + 15.0, 142.5 * 2.0, 192.5)
-                    drawer.fill = ColorRGBa.WHITE
+                    drawer.rectangles {
+                        drawer.fill = ColorRGBa.WHITE
+                        drawer.stroke = null
+                        drawer.strokeWeight = 1.0
+                        drawer.rectangle(xl + 15.0, yl + 15.0, 142.5 * 2.0, 192.5)
+                    }
 
                     if (article.texts.isNotEmpty()) {
                         val stats = article.imageStatistics[0]
@@ -193,7 +200,7 @@ fun main() = application {
                         drawer.fontMap = font
                         writer {
                             leading = 0.0
-                            box = Rectangle(xl + 27.0, yl + 40.0, 142.5 * 2.0 - 20.0, 192.5 - 15.0)
+                            box = Rectangle(xl + 29.0, yl + 45.0, 142.5 * 2.0 - 20.0, 192.5 - 20.0)
                             text(article.texts[0])
                         }
                     }
@@ -203,15 +210,19 @@ fun main() = application {
             //small text block
             layer{
 
-                xs = xOptions.random()
-                ys = yOptions.random()
+                xs = xOption1.random()
+                ys = yOption1.random()
 
-                val font = loadFont("data/fonts/GT-America-Medium.otf", 11.0)
+                val font = loadFont("data/fonts/Prestige_Elite_Std_Bold.ttf", 11.0)
 
 
                 draw {
-                    drawer.rectangle(xs + 15.0, ys + 15.0, 142.5, 192.5)
-                    drawer.fill = ColorRGBa.WHITE
+                    drawer.rectangles {
+                        drawer.fill = ColorRGBa.WHITE
+                        drawer.stroke = null
+                        drawer.strokeWeight = 1.0
+                        drawer.rectangle(xs + 15.0, ys + 15.0, 142.5, 192.5)
+                    }
 
                     if (article.texts.isNotEmpty()) {
                         val stats = article.imageStatistics[0]
@@ -219,8 +230,8 @@ fun main() = application {
                         drawer.fontMap = font
                         writer {
                             leading = 0.0
-                            box = Rectangle(xs + 27.0, ys + 27.0, 142.5 - 20.0, 192.5 - 15.0)
-                            text("Prosopagnosia")
+                            box = Rectangle(xs + 27.0, ys + 35.0, 142.5 - 20.0, 192.5 - 15.0)
+                            text("PROSOPAGNOSIA - A cognitive disorder of face perception in which the ability to recognize familiar faces, including one's own face. ")
                         }
                     }
                 }
@@ -231,13 +242,7 @@ fun main() = application {
                 this.foregroundColor = ColorRGBa.WHITE
             }
 
-//          post(FilmGrain())
-
-
-
-
         }
-
 
         onNewArticle.trigger(article)
 
@@ -248,8 +253,6 @@ fun main() = application {
             this.key = "s"
         }
 
-
-
         extend {
             gui.visible = mouse.position.x < 200
             drawer.clear(ColorRGBa.WHITE)
@@ -258,3 +261,4 @@ fun main() = application {
 
     }
 }
+

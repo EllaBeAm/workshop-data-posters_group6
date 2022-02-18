@@ -65,9 +65,6 @@ fun main() = application {
             layer {
                 draw {
                     if (article.images.isNotEmpty()) {
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5, 172.5)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.25, 172.5 * 1.25)
-                        drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.5, 172.5 * 1.5)
                         drawer.imageFit(article.images[0], 30.0, 50.0, 127.5 * 1.75, 172.5 * 1.75)
 
                     }
@@ -84,13 +81,13 @@ fun main() = application {
                     xs = Int.uniform(2, 100)
                     ys = Int.uniform(2, 100)
                 }
-
+                // this is the magic
                 draw {
                     if (article.images.isNotEmpty()) {
                         drawer.imageFit(article.images[0], 0.0, 0.0, width * 1.0, height * 1.0)
                     }
                 }
-
+                // this make it move
                 post(Perturb()) {
                     phase = seconds * 0.1
                     xSegments = xs
@@ -98,26 +95,6 @@ fun main() = application {
 
                 } .addTo(gui)
 
-//                mask {
-//                    drawer.imageFit(article.images[1], 30.0, 50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5,50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 50.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 30.0, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 232.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 30.0, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 415.0, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 30.0, 597.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 167.5, 597.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 305.0, 597.5, 127.5, 172.5)
-//                    drawer.imageFit(article.images[1], 442.5, 597.5, 127.5, 172.5)
-//
-//                }
-                //blend(Multiply())
             }
             post(Duotone()) {
                 this.backgroundColor = ColorRGBa.BLACK

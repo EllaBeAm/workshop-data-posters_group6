@@ -15,6 +15,8 @@ fun main() = application {
         height = 578
     }
     program {
+
+
         val animatable = object : Animatable() {
             var x = 0.0
             var y = 0.0
