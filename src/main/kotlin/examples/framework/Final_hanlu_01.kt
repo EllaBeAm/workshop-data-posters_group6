@@ -55,6 +55,9 @@ fun main() = application {
         var xOptions = listOf(0.00, 142.50, 142.50*2.0)
         var yOptions = listOf(0.00, 192.50, 192.50*2.0)
 
+        var xOption1 = listOf(0.00, 142.50, 142.50*2.0, 142.50*3.0)
+        var yOption1 = listOf(0.00, 192.50, 192.50*2.0, 192.50*3.0)
+
         //position for the large image
         var xx = 0.0
         var yy = 0.0
@@ -203,15 +206,25 @@ fun main() = application {
             //small text block
             layer{
 
-                xs = xOptions.random()
-                ys = yOptions.random()
+                xs = xOption1.random()
+                ys = yOption1.random()
 
                 val font = loadFont("data/fonts/GT-America-Medium.otf", 11.0)
 
 
                 draw {
-                    drawer.rectangle(xs + 15.0, ys + 15.0, 142.5, 192.5)
-                    drawer.fill = ColorRGBa.WHITE
+                    drawer.rectangles {
+                        drawer.fill = ColorRGBa.WHITE
+                        drawer.stroke = null
+                        drawer.strokeWeight = 1.0
+                        drawer.rectangle(xs + 15.0, ys + 15.0, 142.5, 192.5)
+                    }
+                }
+
+//                        stroke = ColorRGBa.WHITE
+//                        val pos = xs + 15.0, ys + 15.0
+//                        val size = 142.5, 192.5
+
 
                     if (article.texts.isNotEmpty()) {
                         val stats = article.imageStatistics[0]
@@ -223,7 +236,6 @@ fun main() = application {
                             text("Prosopagnosia")
                         }
                     }
-                }
             }
 
             post(Duotone()) {
